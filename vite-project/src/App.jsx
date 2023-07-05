@@ -1,6 +1,17 @@
+import {Post} from './Post'
+import {Header} from './components/Header'
+
+import './global.css'
+
 export function App() {
   return (
-      <h1>Vite + React</h1>
+    <div>
+      <Header />
+      <Post 
+        author="Thiago Murakami"
+        content="I am the new Data Analytics"
+      />
+    </div>
   )
 }
 
