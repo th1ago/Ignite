@@ -10,6 +10,7 @@
     border-radius: 8px;
 }
   
+/* ocupe o max de espaco possivel, como tenho uma div com "display: flex" por volta dela   */
 .commentBox {
     flex: 1;
 }
@@ -80,7 +81,8 @@
 .commentBox footer button svg {
     margin-right: 0.5rem;
 }
-  
+
+/* o simbolo de ponto "\2022" */
 .commentBox footer button span::before {
     content: "\2022";
     padding: 0 0.25rem;
