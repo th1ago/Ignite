@@ -5,17 +5,31 @@ import { Comment } from './Comment';
 import { Avatar } from './Avatar';
 
 import styles from './Post.module.css';
+import { useState } from 'react';
 
 export function Post({author, publishedAt, content}){
+    const [comments, setComments] = useState([
+        1, 2, 
+    ])
+
     const publishedDateFormatted = format(
         publishedAt, "d 'de' LLLL 'às' HH:mm'h'", {
             locale: ptBR,
     });
+
     const publishedDateRelativeToNow = formatDistanceToNow(
         publishedAt, {
             locale: ptBR,
             addSuffix: true
     });
+
+    // quando 'e uma acao do ususario comeca a funcao com Handle 
+    function handleCreateNewComments(){
+        // evitar de redirecionar o usuario para outra pagina 
+        event.preventDefault()
+
+        setComments([...comments, comments.length + 1 ])
+    };
 
     return (
         <article className={styles.post}>
@@ -27,7 +41,7 @@ export function Post({author, publishedAt, content}){
                         <span>{author.role}</span>
                     </div>
                 </div>
-                {/* O método toISOString() retorna a data no formato ISO */}
+                {/* //O método toISOString() retorna a data no formato ISO */}
                 <time title={publishedDateFormatted} dateTime={publishedAt.toISOString()}>
                     {publishedDateRelativeToNow}
                 </time>
@@ -43,7 +57,7 @@ export function Post({author, publishedAt, content}){
             })}
             </div>
 
-            <form className={styles.commentForm}>
+            <form onSubmit={handleCreateNewComments} className={styles.commentForm}>
                 <strong>Deixe seu feedback</strong>
                 <textarea placeholder='Deixe um comentario' />
                 <footer>
@@ -52,8 +66,9 @@ export function Post({author, publishedAt, content}){
             </form>
 
             <div className={styles.commentList}>
-                <Comment />
-                <Comment />
+                {comments.map(comment => {
+                    return <Comment />
+                })}
             </div>
         </article>
     )
