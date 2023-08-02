@@ -8,9 +8,13 @@ import styles from './Post.module.css';
 import { useState } from 'react';
 
 export function Post({author, publishedAt, content}){
+    //estado = quero que o componente monitore
+    //quando quero que a varivel mude eu crio um estado  
     const [comments, setComments] = useState([
-        1, 2, 
+        1, 2, 3, 
     ])
+
+    const [newCommentText, setNewCommentText] = useState('')
 
     const publishedDateFormatted = format(
         publishedAt, "d 'de' LLLL 'às' HH:mm'h'", {
@@ -27,10 +31,13 @@ export function Post({author, publishedAt, content}){
     function handleCreateNewComments(){
         // evitar redirecionar o usuario para outra pagina 
         event.preventDefault()
-        // elemento que esta recebendo aquele evento
-        const newCommentText = event.target.comment.value
-
         setComments([...comments, newCommentText ])
+        setNewCommentText('')
+    };
+
+    function handleNewCommentChange() {
+        // elemento que esta recebendo aquele evento
+        setNewCommentText(event.target.value)
     };
 
     return (
@@ -62,7 +69,13 @@ export function Post({author, publishedAt, content}){
             <form onSubmit={handleCreateNewComments} className={styles.commentForm}>
                 <strong>Deixe seu feedback</strong>
 
-                <textarea name="comment" placeholder='Deixe um comentario' />
+                <textarea 
+                    name="comment"
+                    // o valor dela sempre sera deste estado
+                    value={newCommentText}
+                    placeholder='Deixe um comentario'
+                    onChange={handleNewCommentChange}
+                />
                 
                 <footer>
                     <button type="submit">Publish</button>
@@ -71,7 +84,7 @@ export function Post({author, publishedAt, content}){
 
             <div className={styles.commentList}>
                 {comments.map(comment => {
-                    return <Comment comment={comment}/>
+                    return <Comment content={comment}/>
                 })}
             </div>
         </article>
