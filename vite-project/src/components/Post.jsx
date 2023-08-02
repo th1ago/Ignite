@@ -23,12 +23,14 @@ export function Post({author, publishedAt, content}){
             addSuffix: true
     });
 
-    // quando 'e uma acao do ususario comeca a funcao com Handle 
+    // quando 'e uma acao do ususario comece a funcao com Handle 
     function handleCreateNewComments(){
-        // evitar de redirecionar o usuario para outra pagina 
+        // evitar redirecionar o usuario para outra pagina 
         event.preventDefault()
+        // elemento que esta recebendo aquele evento
+        const newCommentText = event.target.comment.value
 
-        setComments([...comments, comments.length + 1 ])
+        setComments([...comments, newCommentText ])
     };
 
     return (
@@ -59,7 +61,9 @@ export function Post({author, publishedAt, content}){
 
             <form onSubmit={handleCreateNewComments} className={styles.commentForm}>
                 <strong>Deixe seu feedback</strong>
-                <textarea placeholder='Deixe um comentario' />
+
+                <textarea name="comment" placeholder='Deixe um comentario' />
+                
                 <footer>
                     <button type="submit">Publish</button>
                 </footer>
@@ -67,7 +71,7 @@ export function Post({author, publishedAt, content}){
 
             <div className={styles.commentList}>
                 {comments.map(comment => {
-                    return <Comment />
+                    return <Comment comment={comment}/>
                 })}
             </div>
         </article>
