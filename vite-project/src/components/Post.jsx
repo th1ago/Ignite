@@ -41,8 +41,12 @@ export function Post({author, publishedAt, content}){
         setNewCommentText(event.target.value)
     };
 
-    function deleteComment(comment){
-        console.log(`Deletetar ${comment}`)
+    function deleteComment(commentToDelete){
+        const commentsWithoutDeletedOne = comments.filter(comment => {
+            return comment != commentToDelete
+        })
+        // nao se altera uma info, se cria uma nova info e salvando dentro do estado
+        setComments(commentsWithoutDeletedOne);
     }
 
     return (
