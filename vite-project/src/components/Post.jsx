@@ -6,6 +6,7 @@ import { Avatar } from './Avatar';
 
 import styles from './Post.module.css';
 import { useState } from 'react';
+import { CodesandboxLogo } from 'phosphor-react';
 
 export function Post({author, publishedAt, content}){
     //estado = quero que o componente monitore
@@ -39,6 +40,10 @@ export function Post({author, publishedAt, content}){
         // elemento que esta recebendo aquele evento
         setNewCommentText(event.target.value)
     };
+
+    function deleteComment(comment){
+        console.log(`Deletetar ${comment}`)
+    }
 
     return (
         <article className={styles.post}>
@@ -85,7 +90,13 @@ export function Post({author, publishedAt, content}){
 
             <div className={styles.commentList}>
                 {comments.map(comment => {
-                    return <Comment key={comment} content={comment}/>
+                    return (
+                        <Comment 
+                            key={comment}
+                            content={comment}
+                            onDeleteComment={deleteComment}
+                        />
+                    )
                 })}
             </div>
         </article>
