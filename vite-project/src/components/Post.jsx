@@ -9,10 +9,10 @@ import { useState } from 'react';
 import { CodesandboxLogo } from 'phosphor-react';
 
 export function Post({author, publishedAt, content}){
-    //estado = quero que o componente monitore
-    //quando quero que a varivel mude eu crio um estado  
+    //estado = quero que o componente monitore, quando quero que a varivel mude eu crio um estado
+    //iniciar o estado com alguma info do mesmo tipo que vou amarzenar
     const [comments, setComments] = useState([
-        1, 2, 3, 
+        "Post show de bola"
     ])
 
     const [newCommentText, setNewCommentText] = useState('')
@@ -37,9 +37,15 @@ export function Post({author, publishedAt, content}){
     };
 
     function handleNewCommentChange() {
+        // permite ao user digitar e publicar
+        event.target.setCustomValidity('')
         // elemento que esta recebendo aquele evento
         setNewCommentText(event.target.value)
     };
+
+    function handleNewCommentInvalid() {
+        event.target.setCustomValidity("Esse campo e obrigatorio ")
+    }
 
     function deleteComment(commentToDelete){
         const commentsWithoutDeletedOne = comments.filter(comment => {
@@ -48,6 +54,8 @@ export function Post({author, publishedAt, content}){
         // nao se altera uma info, se cria uma nova info e salvando dentro do estado
         setComments(commentsWithoutDeletedOne);
     }
+
+    const isNewCommentEmpty = newCommentText.length == 0;
 
     return (
         <article className={styles.post}>
@@ -81,14 +89,19 @@ export function Post({author, publishedAt, content}){
 
                 <textarea 
                     name="comment"
-                    // o valor dela sempre sera deste estado
+                    // o value dela sempre sera deste estado
                     value={newCommentText}
                     placeholder='Deixe um comentario'
                     onChange={handleNewCommentChange}
+                    onInvalid={handleNewCommentInvalid}
+                    required
                 />
                 
                 <footer>
-                    <button type="submit">Publish</button>
+                    {/* desabilita o botao caso nao tenha nada escrito */}
+                    <button type="submit" disabled={isNewCommentEmpty}>
+                        Publish
+                    </button>
                 </footer>
             </form>
 
