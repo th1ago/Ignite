@@ -5,9 +5,26 @@ import { Comment } from './Comment';
 import { Avatar } from './Avatar';
 
 import styles from './Post.module.css';
-import { useState } from 'react';
+import { ChangeEvent, FormEvent, InvalidEvent, useState } from 'react';
 
-export function Post({author, publishedAt, content}){
+interface Author {
+    name: string;
+    role: string;
+    avatar_url: string
+}
+
+interface Content {
+    type: 'paragraph' | 'link';
+    content: string;
+}
+
+interface PostProps {
+    author: Author;
+    publishedAt: Date;
+    content: Content[];
+}
+
+export function Post({author, publishedAt, content}: PostProps){
     //estado = quero que o componente monitore, quando quero que a varivel mude eu crio um estado
     //iniciar o estado com alguma info do mesmo tipo que vou amarzenar
     const [comments, setComments] = useState([
@@ -27,26 +44,26 @@ export function Post({author, publishedAt, content}){
             addSuffix: true
     });
 
-    // quando 'e uma acao do ususario comece a funcao com Handle 
-    function handleCreateNewComments(){
+    // quando 'e uma acao do ususario comece a funcao com HANDLE 
+    function handleCreateNewComments(event: FormEvent){
         // evitar redirecionar o usuario para outra pagina 
         event.preventDefault()
         setComments([...comments, newCommentText ])
         setNewCommentText('')
-    };
+    }
 
-    function handleNewCommentChange() {
+    function handleNewCommentChange(event: ChangeEvent<HTMLTextAreaElement>) {
         // permite ao user digitar e publicar
         event.target.setCustomValidity('')
         // elemento que esta recebendo aquele evento
         setNewCommentText(event.target.value)
-    };
+    }
 
-    function handleNewCommentInvalid() {
+    function handleNewCommentInvalid(event: InvalidEvent<HTMLTextAreaElement>) {
         event.target.setCustomValidity("Esse campo e obrigatorio ")
     }
 
-    function deleteComment(commentToDelete){
+    function deleteComment(commentToDelete: string){
         const commentsWithoutDeletedOne = comments.filter(comment => {
             return comment != commentToDelete
         })
