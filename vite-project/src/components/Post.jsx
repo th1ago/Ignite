@@ -6,7 +6,6 @@ import { Avatar } from './Avatar';
 
 import styles from './Post.module.css';
 import { useState } from 'react';
-import { CodesandboxLogo } from 'phosphor-react';
 
 export function Post({author, publishedAt, content}){
     //estado = quero que o componente monitore, quando quero que a varivel mude eu crio um estado
