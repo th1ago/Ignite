@@ -10,8 +10,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+<<<<<<< HEAD
     "date-fns": "^2.30.0",
     "phosphor-react": "^1.4.1",
+=======
+>>>>>>> f3b29498e78368fb1b6fca5a05af8be749a08466
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
