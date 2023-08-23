@@ -18,13 +18,18 @@ interface Content {
     content: string;
 }
 
-interface PostProps {
+export interface PostType {
+    id: number;
     author: Author;
     publishedAt: Date;
     content: Content[];
 }
 
-export function Post({author, publishedAt, content}: PostProps){
+interface PostProps {
+    post: PostType;
+}
+
+export function Post({post}: PostProps){
     //estado = quero que o componente monitore, quando quero que a varivel mude eu crio um estado
     //iniciar o estado com alguma info do mesmo tipo que vou amarzenar
     const [comments, setComments] = useState([
@@ -34,12 +39,12 @@ export function Post({author, publishedAt, content}: PostProps){
     const [newCommentText, setNewCommentText] = useState('')
 
     const publishedDateFormatted = format(
-        publishedAt, "d 'de' LLLL 'às' HH:mm'h'", {
+        post.publishedAt, "d 'de' LLLL 'às' HH:mm'h'", {
             locale: ptBR,
     });
 
     const publishedDateRelativeToNow = formatDistanceToNow(
-        publishedAt, {
+        post.publishedAt, {
             locale: ptBR,
             addSuffix: true
     });
@@ -77,21 +82,21 @@ export function Post({author, publishedAt, content}: PostProps){
         <article className={styles.post}>
             <header>
                 <div className={styles.author}>
-                    <Avatar hasBorder src={author.avatar_url}/>
+                    <Avatar hasBorder src={post.author.avatar_url}/>
                     <div className={styles.authorinfo}>
-                        <strong>{author.name} <br /></strong>
-                        <span>{author.role}</span>
+                        <strong>{post.author.name} <br /></strong>
+                        <span>{post.author.role}</span>
                     </div>
                 </div>
                 {/* //O método toISOString() retorna a data no formato ISO */}
-                <time title={publishedDateFormatted} dateTime={publishedAt.toISOString()}>
+                <time title={publishedDateFormatted} dateTime={post.publishedAt.toISOString()}>
                     {publishedDateRelativeToNow}
                 </time>
             </header>
 
             <div className={styles.content}>
             {/* insere o key no primeiro elemento que aparecer no retorno do map */}
-            {content.map(line => {
+            {post.content.map(line => {
                 if (line.type === 'paragraph') {
                     return <p key={line.content}>{line.content}</p>;
                 } else if (line.type === 'link') {
