@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Loader from 'react-loaders'
 import AnimatedLetters from '../AnimatedLetters'
 import './index.scss'
@@ -13,6 +13,7 @@ const Contact = () => {
       })
     })
 
+    
     return (
         <>
         <div className="container contact-page">
