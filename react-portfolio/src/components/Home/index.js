@@ -24,7 +24,7 @@ const Home = () => {
                   <span className={letterClass}>O</span>
                   <span className={`${letterClass} _12`}>i,</span>
                     <br />
-                  <span className={`${letterClass} _13`}>Eu</span>
+                  <span className={`${letterClass} _13`}>Eu &nbsp;</span>
                   <span className={`${letterClass} _14`}>Sou</span>
                   <img src={LogoT} alt="Thiago" />
                   <AnimatedLetters letterClass={letterClass}
